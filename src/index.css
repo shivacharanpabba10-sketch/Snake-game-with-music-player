@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-sys: 'VT323', monospace;
+  --color-cyan: #00ffff;
+  --color-magenta: #ff00ff;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: var(--font-sys);
+  overflow: hidden; /* Prevent scrolling from arrow keys */
+}
+
+/* Glitch Text Effect */
+.glitch-text {
+  position: relative;
+  color: #fff;
+}
+.glitch-text::before, .glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--color-magenta);
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--color-cyan);
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(14px, 9999px, 12px, 0); }
+  20% { clip: rect(85px, 9999px, 90px, 0); }
+  40% { clip: rect(22px, 9999px, 33px, 0); }
+  60% { clip: rect(99px, 9999px, 55px, 0); }
+  80% { clip: rect(33px, 9999px, 88px, 0); }
+  100% { clip: rect(66px, 9999px, 77px, 0); }
+}
+
+/* CRT Scanlines */
+.scanlines {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25));
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Static Noise */
+.static-noise {
+  position: fixed;
+  top: -50%; left: -50%; right: -50%; bottom: -50%;
+  width: 200%; height: 200vh;
+  background: transparent url('https://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+  background-repeat: repeat;
+  animation: bg-animation .2s infinite;
+  opacity: .3;
+  visibility: visible;
+  pointer-events: none;
+  z-index: 49;
+}
+
+@keyframes bg-animation {
+    0% { transform: translate(0,0) }
+    10% { transform: translate(-5%,-5%) }
+    20% { transform: translate(-10%,5%) }
+    30% { transform: translate(5%,-10%) }
+    40% { transform: translate(-5%,15%) }
+    50% { transform: translate(-10%,5%) }
+    60% { transform: translate(15%,0) }
+    70% { transform: translate(0,15%) }
+    80% { transform: translate(3%,35%) }
+    90% { transform: translate(-10%,10%) }
+    100% { transform: translate(0,0) }
+}
+
+/* Screen Shake (Juice) */
+.shake {
+  animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes shake {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+  40%, 60% { transform: translate3d(8px, 0, 0); }
+}
